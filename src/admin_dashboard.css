@@ -40,7 +40,7 @@ button:hover {
   background-color: #0056b3;
 }
 
-/* Teacher Table Styles */
+/* Student Table Styles */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -67,52 +67,42 @@ table tr:hover {
   background-color: #e0e0e0;
 }
 
-/* Add Course Form Styles */
-form {
-  margin-top: 20px;
-}
-
-form label {
-  font-weight: bold;
-  display: block;
-  margin-bottom: 10px;
-}
-
-select {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
+/* Pop-up Form Styles */
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  margin-bottom: 10px;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Edit and Delete Buttons Styles */
-table td button {
-  padding: 6px 12px;
+.modal {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.modal button {
   background-color: #007bff;
   color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
-  margin-right: 4px;
+  font-size: 16px;
+  margin-top: 10px;
 }
 
-table td button:hover {
+.modal button:hover {
   background-color: #0056b3;
 }
 
-table td input[type="text"],
-table td input[type="number"] {
-  padding: 6px;
-  margin-right: 6px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 14px;
-}
-
-table td input[type="text"]:focus,
-table td input[type="number"]:focus {
-  border-color: #007bff;
+/* Dashboard Blur Effect */
+.dashboard-blur {
+  filter: blur(4px); /* Adjust the blur intensity as needed */
 }
