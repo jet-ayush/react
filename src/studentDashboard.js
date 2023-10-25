@@ -1,22 +1,18 @@
-import React, { useState ,useEffect,useContext } from "react";
-import {Link} from "react-router-dom";
-import './admin_dashboard.css';
-import { CourseContext } from "./adminDashboard"; 
-import { CourseProvider } from "./adminDashboard"; 
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import "./admin_dashboard.css";
 
 const initialStudentData = JSON.parse(localStorage.getItem("studentData")) || [
-    { id: 1, course: "maths", name: "Alice" ,phone:0},
-    { id: 2, course: "maths", name: "Bob",phone:0},
-    { id: 3, course: "maths", name: "Charlie",phone:0 },
-    { id: 4, course: "maths", name: "David",phone:0},
-    { id: 5, course: "maths", name: "Eve",phone:8630877198 },
-  ];
+  { id: 1, course: "maths", name: "Alice", phone: 0 },
+  { id: 2, course: "maths", name: "Bob", phone: 0 },
+  { id: 3, course: "maths", name: "Charlie", phone: 0 },
+  { id: 4, course: "maths", name: "David", phone: 0 },
+  { id: 5, course: "maths", name: "Eve", phone: 8630877198 },
+];
 export default function studentDashboard() {
   return (
     <div className="App">
-  <CourseProvider>
       <Dashboard />
-  </CourseProvider>
     </div>
   );
 }
@@ -31,8 +27,7 @@ function Dashboard() {
   const [newId, setId] = useState("");
   const [editstudentId, setEditstudentId] = useState(null);
   const [editedData, setEditedData] = useState({});
-  const { courses } = useContext(CourseContext);
-  const [newPhone,setNewPhone] = useState(""); 
+  const [newPhone, setNewPhone] = useState("");
 
   useEffect(() => {
     localStorage.setItem("studentData", JSON.stringify(students));
@@ -41,17 +36,23 @@ function Dashboard() {
   const applyFilters = () => {
     const normalizedCourseFilter = courseFilter.toLowerCase();
     const normalizedNameFilter = nameFilter.toLowerCase();
-  
+
     const filteredStudents = students.filter((student) => {
-      const matchesCourse = !normalizedCourseFilter || (student.course && student.course.toLowerCase().includes(normalizedCourseFilter));
-      const matchesName = !normalizedNameFilter || (student.name && student.name.toLowerCase().includes(normalizedNameFilter));
-  
+      const matchesCourse =
+        !normalizedCourseFilter ||
+        (student.course &&
+          student.course.toLowerCase().includes(normalizedCourseFilter));
+      const matchesName =
+        !normalizedNameFilter ||
+        (student.name &&
+          student.name.toLowerCase().includes(normalizedNameFilter));
+
       return matchesCourse && matchesName;
     });
-  
+
     setstudents(filteredStudents);
   };
-  
+
   const handleAddClick = () => {
     setIsAdding(true);
   };
@@ -62,7 +63,7 @@ function Dashboard() {
       id: newId,
       course: newCourse,
       name: newstudent,
-      phone :newPhone,
+      phone: newPhone,
     };
     setstudents([...students, newstudentData]);
     setIsAdding(false);
@@ -76,7 +77,6 @@ function Dashboard() {
     const updatedstudents = students.filter((student) => student.id !== id);
     setstudents(updatedstudents);
   };
-  
 
   const handleEdit = (id) => {
     setEditstudentId(id);
@@ -86,7 +86,7 @@ function Dashboard() {
 
   const handleSaveEdit = (id, course, studentName) => {
     const updatedstudents = students.map((student) =>
-      student.id === id ? { ...student, course, student: studentName} : student
+      student.id === id ? { ...student, course, student: studentName } : student
     );
     setstudents(updatedstudents);
     setEditstudentId(null);
@@ -99,90 +99,98 @@ function Dashboard() {
 
   return (
     <div className="container">
-    <div className="header">
-      <div className="filter">
-        <input
-          type="text"
-          placeholder="Filter by course"
-          value={courseFilter}
-          onChange={(e) => setCourseFilter(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Filter by name"
-          value={nameFilter}
-          onChange={(e) => setNameFilter(e.target.value)}
-        />
-        <button onClick={applyFilters}>Apply Filters</button>
-    
-      </div>
-      <h1>student Dashboard</h1>
-      <button className = "navigate-button">
-        <Link to= "/">teacher dashboard </Link></button>
+      <div className="header">
+        <div className="filter">
+          <input
+            type="text"
+            placeholder="Filter by course"
+            value={courseFilter}
+            onChange={(e) => setCourseFilter(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Filter by name"
+            value={nameFilter}
+            onChange={(e) => setNameFilter(e.target.value)}
+          />
+          <button onClick={applyFilters}>Apply Filters</button>
+        </div>
+        <h1>student Dashboard</h1>
+        <button className="navigate-button">
+          <Link to="/">teacher dashboard </Link>
+        </button>
       </div>
       {isAdding && (
-         <div className="overlay">
-        <div className="add-courses">
-          <form onSubmit={handleFormSubmit}>
-          <input
-              type="number"
-              placeholder="id"
-              value={newId}
-              required
-              onChange={(e) => setId(e.target.value)}
-            />
-          <select
-            value={newCourse}
-            onChange={(e) => setNewCourse(e.target.value)}
-            >
-            <option value="">Select a Course</option>
-            {courses.map((course) => (
-                <option key={course} value={course}>
-                {course}
-                </option>
-            ))}
-        </select>
-            <input
-              type="text"
-              placeholder="student Name"
-              value={newstudent}
-              required
-              onChange={(e) => setNewstudent(e.target.value)}
-            />
-            <input
-              type="number"
-              placeholder="student ph no"
-              value={newPhone}
-              required
-              onChange={(e) => setNewPhone(e.target.value)}
-            />
-            <button type="submit">Submit</button>
-          </form>
-        </div>
+        <div className="overlay">
+          <div className="add-courses">
+            <form onSubmit={handleFormSubmit}>
+              <input
+                type="number"
+                placeholder="id"
+                value={newId}
+                required
+                onChange={(e) => setId(e.target.value)}
+              />
+              <select
+                value={newCourse}
+                onChange={(e) => setNewCourse(e.target.value)}
+              >
+                <option value="">Select a Course</option>
+                {/* {courses.map((course) => (
+                  <option key={course} value={course}>
+                    {course}
+                  </option>
+                ))} */}
+              </select>
+              <input
+                type="text"
+                placeholder="student Name"
+                value={newstudent}
+                required
+                onChange={(e) => setNewstudent(e.target.value)}
+              />
+              <input
+                type="number"
+                placeholder="student ph no"
+                value={newPhone}
+                required
+                onChange={(e) => setNewPhone(e.target.value)}
+              />
+              <button type="submit">Submit</button>
+            </form>
+          </div>
         </div>
       )}
-  <div className={isAdding ? "dashboard-blur" : "teacher-table"}>
-  <button onClick={handleAddClick}>Add Courses</button>
-      <StudentTable
-        students={students}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-        onSave={handleSaveEdit}
-        editstudentId={editstudentId}
-        editedData={editedData}
-        onEditChange={handleEditChange}
-      />
+      <div className={isAdding ? "dashboard-blur" : "teacher-table"}>
+        <button onClick={handleAddClick}>Add Courses</button>
+        <StudentTable
+          students={students}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+          onSave={handleSaveEdit}
+          editstudentId={editstudentId}
+          editedData={editedData}
+          onEditChange={handleEditChange}
+        />
       </div>
     </div>
   );
 }
 
-function StudentTable({ students, onEdit, onDelete, onSave, editstudentId, editedData, onEditChange }) {
+function StudentTable({
+  students,
+  onEdit,
+  onDelete,
+  onSave,
+  editstudentId,
+  editedData,
+  onEditChange,
+}) {
   return (
     <table>
       <thead>
         <tr>
-        <th>student id</th>
+          <th>student id</th>
           <th>student Name</th>
           <th>Course Name</th>
           <th>Phone no</th>
@@ -198,7 +206,7 @@ function StudentTable({ students, onEdit, onDelete, onSave, editstudentId, edite
                   type="number"
                   value={editedData.id}
                   required
-                  onChange={(e) => onEditChange(e, 'id')}
+                  onChange={(e) => onEditChange(e, "id")}
                 />
               ) : (
                 student.id
@@ -209,7 +217,7 @@ function StudentTable({ students, onEdit, onDelete, onSave, editstudentId, edite
                 <input
                   type="text"
                   value={editedData.student}
-                  onChange={(e) => onEditChange(e, 'student')}
+                  onChange={(e) => onEditChange(e, "student")}
                 />
               ) : (
                 student.name
@@ -220,7 +228,7 @@ function StudentTable({ students, onEdit, onDelete, onSave, editstudentId, edite
                 <input
                   type="text"
                   value={editedData.course}
-                  onChange={(e) => onEditChange(e, 'course')}
+                  onChange={(e) => onEditChange(e, "course")}
                 />
               ) : (
                 student.course
@@ -231,7 +239,7 @@ function StudentTable({ students, onEdit, onDelete, onSave, editstudentId, edite
                 <input
                   type="number"
                   value={editedData.phone}
-                  onChange={(e) => onEditChange(e, 'phone')}
+                  onChange={(e) => onEditChange(e, "phone")}
                 />
               ) : (
                 student.phone
@@ -239,7 +247,18 @@ function StudentTable({ students, onEdit, onDelete, onSave, editstudentId, edite
             </td>
             <td>
               {editstudentId === student.id ? (
-                <button onClick={() => onSave(student.id, editedData.course, editedData.student,editedData.phone)}>Save</button>
+                <button
+                  onClick={() =>
+                    onSave(
+                      student.id,
+                      editedData.course,
+                      editedData.student,
+                      editedData.phone
+                    )
+                  }
+                >
+                  Save
+                </button>
               ) : (
                 <>
                   <button onClick={() => onEdit(student.id)}>Edit</button>
